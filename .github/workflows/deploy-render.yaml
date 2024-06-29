@@ -4,7 +4,6 @@ on:
     workflows: ['Docker Build and Push']
     branches:
       - main
-      - v2
     types:
       - completed
   workflow_dispatch:
