@@ -1,16 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import dotenv from 'dotenv'
 import { cleanEnv, str, num, bool } from 'envalid'
 import { LogLevel, LogFormat } from '#enums/log'
 
 const appPath = path.dirname(import.meta.url).replace('file:', '')
 const pkgPath = path.join(appPath, '../package.json')
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
-
-dotenv.config({
-  path: path.join(appPath, '../.env'),
-})
 
 const env = cleanEnv(process.env, {
   NODE_ENV: str({

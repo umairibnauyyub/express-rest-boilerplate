@@ -17,7 +17,7 @@ Swagger: https://express-rest-boilerplate.onrender.com/docs
   - [Requirements](#requirements)
   - [Features](#features)
   - [Getting Started](#getting-started)
-    - [With a Package Manager](#with-a-package-manager)
+    - [With a Node Version Manager](#with-a-node-version-manager)
     - [With Github](#with-github)
     - [With Docker Compose](#with-docker-compose)
   - [Folder Structure](#folder-structure)
@@ -26,14 +26,14 @@ Swagger: https://express-rest-boilerplate.onrender.com/docs
 
 ## Requirements
 
-- [Node 18+](https://nodejs.org/en/download/) or [Docker](https://www.docker.com/)
+- [Node.js v20+](https://nodejs.org/en/download/) or [Docker](https://www.docker.com/)
 
 ## Features
 
 - No transpilers, just vanilla javascript
-- Node 18 and ES2022 latest features like [top-level await](https://h3manth.com/ES2022/#top-level-await)
+- Node.js v20 and ES2024 latest features
 - [ECMAScript modules](https://nodejs.org/api/esm.html#modules-ecmascript-modules) and import aliases
-- Code completion and optional type checking with [Typescript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html), [JSDoc](https://code.visualstudio.com/docs/languages/javascript#_jsdoc-support) and [VSCode's IntelliSense](https://code.visualstudio.com/docs/nodejs/working-with-javascript#_intellisense)
+- Code completion and optional type checking with [JSDoc](https://code.visualstudio.com/docs/languages/javascript#_jsdoc-support)
 - Structured logs with [pino](https://github.com/pinojs/pino)
 - Metrics with [Prometheus](https://github.com/siimon/prom-client) client
 - [OpenTelemetry](https://opentelemetry.io/) auto instrumentation for traces, metrics and logs.
@@ -44,23 +44,23 @@ Swagger: https://express-rest-boilerplate.onrender.com/docs
 - MongoDB ORM with [Mongoose](https://mongoosejs.com/)
 - [Docker](https://www.docker.com/) with [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) and [distroless](https://github.com/GoogleContainerTools/distroless) base image for production builds
 - [Docker compose](https://docs.docker.com/compose/) file for easy setup, including observability tools (Grafana, Loki, Tempo and Prometheus)
-- Load environment variables from .env files with [dotenv](https://github.com/rolodato/dotenv-safe)
+- Load environment variables from .env files with Node's [--env-file](https://nodejs.org/en/learn/command-line/how-to-read-environment-variables-from-nodejs) flag
 - Unit and integration tests with [Vitest](https://vitest.dev/) and [Supertest](https://github.com/visionmedia/supertest)
 - Code coverage with [Codecov](https://about.codecov.io/) github action
 - Git pre-commit hooks with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
 - Authentication and Authorization with [passport](http://passportjs.org)
 - Automatic error handling for express asynchronous routes with [express-async-errors](https://github.com/davidbanham/express-async-errors)
 - CI/CD with [Github Actions](https://github.com/features/actions)
-- Auto reload with [node's watch mode](https://nodejs.org/dist/latest-v18.x/docs/api/cli.html#--watch)
+- Auto reload with [node's watch mode](https://nodejs.org/dist/latest-v20.x/docs/api/cli.html#--watch)
 - Server and tests debugging with [VSCode's debugger](https://code.visualstudio.com/docs/editor/debugging)
 - [Dependabot](https://docs.github.com/pt/code-security/dependabot/dependabot-security-updates/configuring-dependabot-security-updates) configuration file for automatic dependency updates
 - CORS configuration
 
 ## Getting Started
 
-### With a Package Manager
+### With a Node Version Manager
 
-1. Install Node.JS v18. You can use a node version manager like [fnm](https://github.com/Schniz/fnm).
+1. Install Node.JS v20. You can use a node version manager like [fnm](https://github.com/Schniz/fnm).
 
 ```bash
 fnm install
@@ -71,33 +71,39 @@ fnm use
 
 ```bash
 # with npm
-npm init @danielfsousa express-rest-boilerplate my-api
+npm init @danielfsousa express-rest my-api
 
 # with yarn
-yarn create @danielfsousa express-rest-boilerplate my-api
+yarn create @danielfsousa express-rest my-api
 
 # with pnpm
-pnpm create @danielfsousa express-rest-boilerplate my-api
+pnpm create @danielfsousa express-rest my-api
+
+# with bun
+bun create @danielfsousa express-rest my-api
 ```
 
 3. Change .env database credentials
 
 ```bash
 cp .env.example .env
-nano .env
+vim .env
 ```
 
 4. Run server in development mode. The server will restart everytime a file is changed.
 
 ```bash
 # with npm
-npm run start:dev
+npm run dev
 
 # with yarn
-yarn start:dev
+yarn dev
 
 # with pnpm
-pnpm start:dev
+pnpm dev
+
+# with bun
+bun dev
 ```
 
 ### With Github
@@ -171,7 +177,7 @@ To learn how to search for logs and traces in Grafana, take a look at the [docum
 npm run lint       # lints code and check formatting
 npm run lint:fix   # lints code, check formatting and tries to fix found problems
 npm run start      # starts server
-npm run start:dev  # starts server in watch mode, waiting for file changes
+npm run dev        # starts server in watch mode, waiting for file changes
 npm run test       # runn all tests in watch mode, waiting for file changes
 npm run test:cov   # runn all tests and report coverage
 npm run validate   # runs lint and test scripts for files on git's staging area

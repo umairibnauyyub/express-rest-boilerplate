@@ -27,11 +27,11 @@
   },
   "main": "src/main.js",
   "scripts": {
+    "dev": "node --env-file=.env --require=./src/lib/tracing.cjs --watch bin/www.js",
     "lint": "eslint . ; prettier . --check",
     "lint:fix": "eslint . --fix ; prettier --write .",
     "prepare": "husky install || true",
     "start": "bin/www.js",
-    "start:dev": "node -r ./src/lib/tracing.cjs --watch bin/www.js",
     "test": "vitest",
     "test:cov": "vitest run --coverage",
     "validate": "lint-staged"
@@ -51,7 +51,6 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.3",
     "date-fns": "^2.29.3",
-    "dotenv": "^10.0.0",
     "email-templates": "^8.0.7",
     "envalid": "^7.2.1",
     "express": "^4.15.2",
@@ -95,7 +94,8 @@
     "testcontainers": "^9.0.0",
     "vitest": "^0.23.4"
   },
+  "packageManager": "npm@10.8.1+sha512.0e9d42e92bd2318408ed81eaff2da5f78baf23ee7d12a6eed44a6e2901d0f29d7ab715d1b918ade601f72e769a824d9a5c322383f22bbbda5dd396e79de2a077",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
