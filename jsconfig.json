@@ -1,24 +1,10 @@
 {
   "include": ["src/**/*", "test/**/*"],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "module": "NodeNext",
-    "checkJs": true,
-    "esModuleInterop": false,
     "moduleResolution": "NodeNext",
-    "baseUrl": ".",
-    "paths": {
-      "#config": ["./src/config.js"],
-      "#controllers/*": ["./src/controllers/*.controller.js"],
-      "#enums/*": ["./src/enums/*.enum.js"],
-      "#errors/*": ["./src/errors/*.error.js"],
-      "#lib/*": ["./src/lib/*.js"],
-      "#middlewares/*": ["./src/middlewares/*.middleware.js"],
-      "#models/*": ["./src/models/*.model.js"],
-      "#routes/*": ["./src/routes/*.route.js"],
-      "#services/*": ["./src/services/*.service.js"],
-      "#validations/*": ["./src/validations/*.validation.js"]
-    }
+    "checkJs": true
   },
   "typeAcquisition": {
     "exclude": []
