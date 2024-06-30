@@ -11,7 +11,7 @@ RUN npm ci --omit=dev
 COPY . .
 
 FROM base-dev AS development
-CMD ["node", "--env-file=.env", "--require=./src/lib/tracing.cjs", "--watch", "bin/www.js"]
+CMD ["node", "--require=./src/lib/tracing.cjs", "--watch", "bin/www.js"]
 
 FROM gcr.io/distroless/nodejs20-debian12:20.15 AS production
 WORKDIR /app

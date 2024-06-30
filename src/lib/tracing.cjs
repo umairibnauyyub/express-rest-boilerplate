@@ -1,8 +1,6 @@
 // TODO: currently not supported for ESM modules
 // https://github.com/open-telemetry/opentelemetry-js/pull/2846
 
-require('dotenv').config()
-
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
 const { JaegerExporter } = require('@opentelemetry/exporter-jaeger')
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node')

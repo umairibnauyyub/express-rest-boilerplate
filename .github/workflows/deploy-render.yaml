@@ -1,7 +1,7 @@
 name: Deploy
 on:
   workflow_run:
-    workflows: ['Docker Build and Push']
+    workflows: ["Docker Build and Push"]
     branches:
       - main
     types:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag (leave empty for latest)'
+        description: "Tag (leave empty for latest)"
         required: false
 
 env:

@@ -1,4 +1,5 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+set -eu
 
-npx lint-staged
+npx @biomejs/biome check --write --staged --files-ignore-unknown=true --no-errors-on-unmatched
+git update-index --again

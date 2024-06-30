@@ -9,7 +9,7 @@ import logger from '#lib/logger'
 import { errorHandlerMiddleware, notFoundMiddleware } from '#middlewares/error'
 import metricsMidddleware from '#middlewares/metrics'
 import openApiMidddlewares from '#middlewares/openapi'
-import addTraceIdMiddleware from '#middlewares/traceId'
+import addTraceIdMiddleware from '#middlewares/trace-id'
 import v1routes from '#routes/v1/v1'
 
 const app = express()

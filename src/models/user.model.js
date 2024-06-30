@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 )
 
 userSchema.pre('save', async function save(next) {
@@ -73,9 +73,9 @@ userSchema.method({
     const transformed = {}
     const fields = ['id', 'name', 'email', 'picture', 'role', 'createdAt']
 
-    fields.forEach(field => {
+    for (const field of fields) {
       transformed[field] = this[field]
-    })
+    }
 
     return transformed
   },

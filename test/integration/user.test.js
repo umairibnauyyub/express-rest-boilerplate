@@ -1,10 +1,10 @@
+import { MongoDBContainer } from '@testcontainers/mongodb'
 /* eslint-disable unused-imports/no-unused-vars */
 import bcrypt from 'bcryptjs'
 import httpStatus from 'http-status'
-import { omit, isNil, omitBy, some } from 'lodash-es'
+import { isNil, omit, omitBy, some } from 'lodash-es'
 import request from 'supertest'
-import { MongoDBContainer } from 'testcontainers'
-import { expect, describe, it, vi, beforeAll, beforeEach, afterAll } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import config from '#config'
 import * as database from '#lib/database'
 import app from '#lib/server'
@@ -15,13 +15,16 @@ async function format(user) {
   return omitBy(dbUser, isNil)
 }
 
-/** @type {import("testcontainers").StartedMongoDBContainer} */
+/** @type {import("@testcontainers/mongodb").StartedMongoDBContainer} */
 let mongodbContainer
-let adminAccessToken, userAccessToken, dbUsers, user2
+let adminAccessToken
+let userAccessToken
+let dbUsers
+let user2
 
 beforeAll(async () => {
-  mongodbContainer = await new MongoDBContainer('mongo:6').start()
-  await database.connect(mongodbContainer.getConnectionString())
+  mongodbContainer = await new MongoDBContainer('mongo:7').start()
+  await database.connect(`${mongodbContainer.getConnectionString()}?directConnection=true`)
 })
 
 afterAll(async () => {

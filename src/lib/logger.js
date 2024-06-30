@@ -1,5 +1,5 @@
+import { context, isSpanContextValid, trace } from '@opentelemetry/api'
 import { pino } from 'pino'
-import { context, trace, isSpanContextValid } from '@opentelemetry/api'
 import config from '#config'
 import { LogFormat } from '#enums/log'
 

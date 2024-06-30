@@ -1,9 +1,9 @@
+import { MongoDBContainer } from '@testcontainers/mongodb'
 /* eslint-disable unused-imports/no-unused-vars */
 import { add, sub } from 'date-fns'
 import httpStatus from 'http-status'
 import { omit } from 'lodash-es'
 import request from 'supertest'
-import { MongoDBContainer } from 'testcontainers'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as database from '#lib/database'
 import app from '#lib/server'
@@ -34,13 +34,16 @@ const user = {
   name: 'User',
 }
 
-/** @type {import("testcontainers").StartedMongoDBContainer} */
+/** @type {import("@testcontainers/mongodb").StartedMongoDBContainer} */
 let mongodbContainer
-let refreshToken, resetToken, expiredRefreshToken, expiredResetToken
+let refreshToken
+let resetToken
+let expiredRefreshToken
+let expiredResetToken
 
 beforeAll(async () => {
-  mongodbContainer = await new MongoDBContainer('mongo:6').start()
-  await database.connect(mongodbContainer.getConnectionString())
+  mongodbContainer = await new MongoDBContainer('mongo:7').start()
+  await database.connect(`${mongodbContainer.getConnectionString()}?directConnection=true`)
   await User.create(dbUser)
 })
 
@@ -352,13 +355,13 @@ describe('POST /v1/auth/send-password-reset', () => {
     const PasswordResetTokenObj = await PasswordResetToken.create(resetToken)
 
     expect(PasswordResetTokenObj.resetToken).toEqual(
-      '5947397b323ae82d8c3a333b.c69d0435e62c9f4953af912442a3d064e20291f0d228c0552ed4be473e7d191ba40b18c2c47e8b9d'
+      '5947397b323ae82d8c3a333b.c69d0435e62c9f4953af912442a3d064e20291f0d228c0552ed4be473e7d191ba40b18c2c47e8b9d',
     )
     expect(PasswordResetTokenObj.userId.toString()).toEqual('5947397b323ae82d8c3a333b')
     expect(PasswordResetTokenObj.userEmail).toEqual(dbUser.email)
     expect(PasswordResetTokenObj.expires).to.be.above(add(Date.now(), { hours: 1 }))
 
-    vi.spyOn(emailProviders, 'sendPasswordReset').mockResolvedValue('email sent')
+    vi.spyOn(emailProviders, 'sendPasswordReset').mockResolvedValue()
 
     return request(app)
       .post('/v1/auth/send-password-reset')
@@ -403,7 +406,7 @@ describe('POST /v1/auth/reset-password', () => {
   it('should update password and send confirmation email when email and reset token are valid', async () => {
     await PasswordResetToken.create(resetToken)
 
-    vi.spyOn(emailProviders, 'sendPasswordChangeEmail').mockResolvedValue('email sent')
+    vi.spyOn(emailProviders, 'sendPasswordChangeEmail').mockResolvedValue()
 
     return request(app)
       .post('/v1/auth/reset-password')
@@ -485,7 +488,7 @@ describe('POST /v1/auth/reset-password', () => {
     const expiredPasswordResetTokenObj = await PasswordResetToken.create(expiredResetToken)
 
     expect(expiredPasswordResetTokenObj.resetToken).toEqual(
-      '5947397b323ae82d8c3a333b.c69d0435e62c9f4953af912442a3d064e20291f0d228c0552ed4be473e7d191ba40b18c2c47e8b9d'
+      '5947397b323ae82d8c3a333b.c69d0435e62c9f4953af912442a3d064e20291f0d228c0552ed4be473e7d191ba40b18c2c47e8b9d',
     )
     expect(expiredPasswordResetTokenObj.userId.toString()).toEqual('5947397b323ae82d8c3a333b')
     expect(expiredPasswordResetTokenObj.userEmail).toEqual(dbUser.email)

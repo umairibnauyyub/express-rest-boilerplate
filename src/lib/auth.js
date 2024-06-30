@@ -1,6 +1,6 @@
 import passport from 'passport'
 import BearerStrategy from 'passport-http-bearer'
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
 import config from '#config'
 import User from '#models/user'
 import * as authProviders from '#services/auth'

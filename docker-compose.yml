@@ -12,7 +12,6 @@ x-logging: &default-logging
         source_labels: ["container_name"]
         target_label: instance
 
-version: '3.9'
 services:
   api:
     build:
@@ -22,17 +21,23 @@ services:
       - .env
     ports:
       - 8000:8000
-    volumes:
-      - .:/app
-      - /app/node_modules
     labels:
       namespace: app
     logging: *default-logging
     depends_on:
       - db
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package-lock.json
 
   db:
-    image: mongo:6
+    image: mongo:7
     ports:
       - 27017:27017
     labels:
@@ -40,7 +45,7 @@ services:
     logging: *default-logging
 
   prometheus:
-    profiles: ['o11y']
+    profiles: ["o11y"]
     image: prom/prometheus:v2.39.1
     ports:
       - 9090:9090
@@ -55,7 +60,7 @@ services:
     logging: *default-logging
 
   loki:
-    profiles: ['o11y']
+    profiles: ["o11y"]
     image: grafana/loki:2.6.1
     command: -config.file=/etc/loki/loki.yaml
     ports:
@@ -73,7 +78,7 @@ services:
     # logging: *default-logging
 
   tempo:
-    profiles: ['o11y']
+    profiles: ["o11y"]
     image: grafana/tempo:1.5.0
     command: -config.file=/etc/tempo.yaml
     volumes:
@@ -87,7 +92,7 @@ services:
     logging: *default-logging
 
   tempo-query:
-    profiles: ['o11y']
+    profiles: ["o11y"]
     image: grafana/tempo-query:1.5.0
     command: --grpc-storage-plugin.configuration-file=/etc/tempo-query.yaml
     volumes:
@@ -101,7 +106,7 @@ services:
       - tempo
 
   grafana:
-    profiles: ['o11y']
+    profiles: ["o11y"]
     image: grafana/grafana:9.2.2
     volumes:
       - ./config/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml

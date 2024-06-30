@@ -1,8 +1,3 @@
 {
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "42crunch.vscode-openapi",
-    "mermade.openapi-lint"
-  ]
+  "recommendations": ["biomejs.biome", "42crunch.vscode-openapi", "mermade.openapi-lint"]
 }

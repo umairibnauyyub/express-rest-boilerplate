@@ -5,15 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 20.15
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: "20.15"
 
       - name: Cache npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -22,13 +22,13 @@ jobs:
       - name: Install packages
         run: npm ci
 
-      - name: Run lint
-        run: npm run lint
+      - name: Check lint and format errors
+        run: npm run check:ci
 
       - name: Run tests
         run: npm run test:cov
         env:
-          CI: 'true'
+          CI: "true"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3

@@ -2,6 +2,8 @@ import crypto from 'node:crypto'
 import { addDays } from 'date-fns'
 import mongoose from 'mongoose'
 
+/** @import { User } from '#models/user' */
+
 /**
  * Refresh Token Schema
  * @private

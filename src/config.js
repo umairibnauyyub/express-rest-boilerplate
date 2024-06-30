@@ -1,7 +1,7 @@
-import fs from 'fs'
-import path from 'path'
-import { cleanEnv, str, num, bool } from 'envalid'
-import { LogLevel, LogFormat } from '#enums/log'
+import fs from 'node:fs'
+import path from 'node:path'
+import { bool, cleanEnv, num, str } from 'envalid'
+import { LogFormat, LogLevel } from '#enums/log'
 
 const appPath = path.dirname(import.meta.url).replace('file:', '')
 const pkgPath = path.join(appPath, '../package.json')

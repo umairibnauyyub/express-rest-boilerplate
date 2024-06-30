@@ -26,6 +26,7 @@ async function startServer() {
   createTerminus(server, {
     onSignal,
     onShutdown,
+    signals: ['SIGINT', 'SIGTERM'],
     logger: (msg, err) => logger.error({ msg, err }),
     healthChecks: {
       '/health': onHealthCheck,
